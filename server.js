@@ -19,7 +19,7 @@ const JWT_SECRET = process.env.JWT_SECRET || 'your_jwt_secret';
 // Mock function to authenticate a user
 const authenticateUser = async (email) => {
   const response = await axios.get(
-    `https://api.airtable.com/v0/${AIRTABLE_BASE_ID}/parishes?filterByFormula={PC-Email}='${email}'`,
+    `https://api.airtable.com/v0/${AIRTABLE_BASE_ID}/staff?filterByFormula={Email}='${email}'`,
     {
       headers: {
         Authorization: `Bearer ${AIRTABLE_API_KEY}`,
