@@ -40,7 +40,7 @@ const authenticateUser = async (email) => {
 };
 
 // Login route to authenticate users and issue JWT
-app.post('/api/auth/login', async (req, res) => {
+app.post('/api/login', async (req, res) => {
   const { email } = req.body;
 
   console.log(req.body);
