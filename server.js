@@ -36,9 +36,6 @@ const authenticateUser = async (email) => {
 
   const user = response.data.records[0];
 
-  // Replace this with proper password hashing and comparison logic
-  // ... (should not directly compare passwords)
-
   return user;
 };
 
