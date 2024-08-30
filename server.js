@@ -31,7 +31,6 @@ const groups = new AirtableService(apiKey, nurseryBase, 'groups');
 app.post('/api/login', async (req, res) => {
   const { email } = req.body;
 
-  console.log(req.body);
   console.log(email);
 
   try {
