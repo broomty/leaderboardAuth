@@ -28,6 +28,25 @@ export class AirtableService {
     }
   }
 
+  async authenticateUser  (email) {
+    const response = await axios.get(
+      `https://api.airtable.com/v0/${this.baseId}/staff?filterByFormula={Email}='${email}'`,
+      {
+        headers: {
+          Authorization: `Bearer ${this.apiKey}`,
+        },
+      }
+    );
+  
+    if (!response.data || !response.data.records || response.data.records.length === 0) {
+      throw new Error('User not found');
+    }
+  
+    const user = response.data.records[0];
+  
+    return user;
+  };
+
   async fetchRecords(offset) {
     const config = {
       headers: {
