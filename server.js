@@ -14,11 +14,15 @@ app.use(urlencoded({extended: false}))
 app.use(cors());
 
 const apiKey = process.env.AIRTABLE_API_KEY;
-const baseId = process.env.AIRTABLE_BASE_ID;
+const opsBase = process.env.UG_OPS_BASE_ID; //for staff
+const nurseryBase = process.env.UG_NU_BASE_ID; //for parishes
+const staffView = process.env.STAFF_VIEW;
+
 const jwtToken = process.env.JWT_SECRET || 'your_jwt_secret';
-const staff = new AirtableService(apiKey, baseId, 'staff');
-const parishes = new AirtableService(apiKey, baseId, 'parishes');
-const groups = new AirtableService(apiKey, baseId, 'groups');
+
+const staff = new AirtableService(apiKey, opsBase, 'staff');
+const parishes = new AirtableService(apiKey, nurseryBase, 'parishes');
+const groups = new AirtableService(apiKey, nurseryBase, 'groups');
 
 // Mock function to authenticate a user
 
@@ -31,7 +35,7 @@ app.post('/api/login', async (req, res) => {
   console.log(email);
 
   try {
-    const user = await staff.authenticateUser(email);
+    const user = await staff.authenticateUser(email,staffView);
 
     const token = jwt.sign({ id: user.fields.id, email: user.fields.email }, jwtToken, {
       expiresIn: '1h',
