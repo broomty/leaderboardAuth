@@ -17,12 +17,15 @@ const apiKey = process.env.AIRTABLE_API_KEY;
 const opsBase = process.env.UG_OPS_BASE_ID; //for staff
 const nurseryBase = process.env.UG_NU_BASE_ID; //for parishes
 const staffView = process.env.STAFF_VIEW;
+const staffTable = process.env.STAFF_TABLE;
+const parishTable = process.env.PARISH_TABLE;
+const groupTable = process.env.GROUP_TABLE;
 
 const jwtToken = process.env.JWT_SECRET || 'your_jwt_secret';
 
-const staff = new AirtableService(apiKey, opsBase, 'staff');
-const parishes = new AirtableService(apiKey, nurseryBase, 'parishes');
-const groups = new AirtableService(apiKey, nurseryBase, 'groups');
+const staff = new AirtableService(apiKey, opsBase, staffTable);
+const parishes = new AirtableService(apiKey, nurseryBase, parishTable);
+const groups = new AirtableService(apiKey, nurseryBase, groupTable);
 
 // Mock function to authenticate a user
 
@@ -31,6 +34,7 @@ const groups = new AirtableService(apiKey, nurseryBase, 'groups');
 app.post('/api/login', async (req, res) => {
   const { email } = req.body;
 
+  console.log(staffView);
   console.log(email);
 
   try {
