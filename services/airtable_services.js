@@ -29,8 +29,9 @@ export class AirtableService {
   }
 
   async authenticateUser(email, view) {
+    const encodedView = encodeURIComponent(view);
     const response = await axios.get(
-      `https://api.airtable.com/v0/${this.baseId}/staff?filterByFormula={Email}='${email}'&view=${view}`,
+      `https://api.airtable.com/v0/${this.baseId}/staff?filterByFormula={Email}='${email}'&view=${encodedView}`,
       {
         headers: {
           Authorization: `Bearer ${this.apiKey}`,
