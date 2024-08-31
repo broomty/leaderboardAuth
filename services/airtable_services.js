@@ -7,16 +7,24 @@ export class AirtableService {
     this.apiKey = apiKey;
     this.baseId = baseId;
     this.tableName = tableName;
-    this.baseUrl = `https://api.airtable.com/v0/${this.baseId}/${this.tableName}`;
   }
 
-  async fetchAllRecords() {
+  async fetchAllRecords(view) {
+    const encodedTableName = encodeURIComponent(this.tableName);
+    const encodedView = encodeURIComponent(view);
     try {
       let records = [];
       let offset = null;
 
       do {
-        const response = await this.fetchRecords(offset);
+        const response = await axios.get(`https://api.airtable.com/v0/${this.baseId}/${encodedTableName}?view=${encodedView}`, {
+          headers: {
+            Authorization: `Bearer ${this.apiKey}`,
+          },
+          params: {
+            offset: offset,
+          },
+        });
         records = records.concat(response.data.records);
         offset = response.data.offset;
       } while (offset);
@@ -49,16 +57,4 @@ export class AirtableService {
     return user;
   };
 
-  async fetchRecords(offset) {
-    const config = {
-      headers: {
-        Authorization: `Bearer ${this.apiKey}`,
-      },
-      params: {
-        offset: offset,
-      },
-    };
-
-    return axios.get(this.baseUrl, config);
-  }
 }

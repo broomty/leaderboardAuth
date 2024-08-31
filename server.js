@@ -18,6 +18,7 @@ const opsBase = process.env.UG_OPS_BASE_ID; //for staff
 const nurseryBase = process.env.UG_NU_BASE_ID; //for parishes
 const currentActionsBase = process.env.UG_CNU_BASE_ID;//for groups
 const staffView = process.env.STAFF_VIEW;
+const parishView = process.env.PARISH_VIEW;
 const staffTable = process.env.STAFF_TABLE;
 const parishTable = process.env.PARISH_TABLE;
 const groupTable = process.env.GROUP_TABLE;
@@ -66,7 +67,7 @@ const verifyToken = (req, res, next) => {
 app.get('/api/parishes', verifyToken, (req, res) => {
   let parishesData;
 
-  parishes.fetchAllRecords()
+  parishes.fetchAllRecords(parishView)
     .then(records => {
       parishesData = records;
       res.json(parishesData);
@@ -79,7 +80,7 @@ app.get('/api/parishes', verifyToken, (req, res) => {
 
 app.get('/api/groups',verifyToken,(req,res)=>{
   let groupsData;
-  groups.fetchAllRecords().then(records=>{
+  groups.fetchAllRecords(parishView).then(records=>{
     groupsData = records;
     res.json(groupsData);
   }).catch(error=>{
